@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10191d">
+<meta name="description" content="Outer Reach : jeu de prospection et de minage spatial, jouable dans le navigateur.">
+<title>Outer Reach</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%2310191d'/%3E%3Cpath d='M13 8 3 3l3 5-3 5z' fill='%234fd1c5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+  <div class="brand">OUTER REACH<small>POSTE DE PILOTAGE</small></div>
+  <div class="sector">SYSTÈME ORÉE<small>RELAIS-9 · CEINTURE INTÉRIEURE</small></div>
+  <button id="help">? Commandes</button>
+</header>
+
+<main>
+  <section class="viewport">
+    <canvas tabindex="0" id="space" aria-label="Vue spatiale de navigation"></canvas>
+    <div class="viewtools">
+      <button id="zoomout" aria-label="Dézoomer">−</button>
+      <button id="zoomin" aria-label="Zoomer">+</button>
+      <button id="sound">SON OFF</button>
+    </div>
+    <div class="touch">
+      <button data-key="left" aria-label="Tourner à gauche">↶</button>
+      <button data-key="thrust" aria-label="Accélérer">▲</button>
+      <button data-key="right" aria-label="Tourner à droite">↷</button>
+      <button data-key="brake">FREIN</button>
+    </div>
+    <div class="telemetry">
+      <div><small>VITESSE</small><b id="speed">000</b><span>m/s</span></div>
+      <div><small>CARBURANT</small><b id="fuel">100</b><span>%</span></div>
+      <div><small>CHALEUR</small><b id="heat">00</b><span>%</span></div>
+    </div>
+  </section>
+
+  <aside>
+    <section class="ship">
+      <small>PROSPECTEUR</small>
+      <h1>Sillon <span>01</span></h1>
+      <div id="shipstatus">À QUAI</div>
+      <div class="balance"><small>CRÉDITS</small><strong id="credits">80 Cr</strong></div>
+    </section>
+    <section class="radarsection">
+      <div class="sectiontitle">RADAR LOCAL <span>RAYON 2 KM</span></div>
+      <canvas id="radar" aria-label="Radar des contacts"></canvas>
+      <div class="legend">◇ Station　◆ Ferrite　▲ Vous</div>
+    </section>
+    <section class="contacts">
+      <div class="sectiontitle">CONTACTS <span>LES PLUS PROCHES</span></div>
+      <button id="stationtarget" class="contact"><span>◇ Relais-9</span><em id="stationdistance">0 m</em></button>
+      <div id="asteroidlist"></div>
+    </section>
+    <section class="targetbox">
+      <div class="sectiontitle">DESTINATION</div>
+      <strong id="targetname">Aucun contact</strong>
+      <p id="targetinfo"></p>
+      <button id="navigate">Cap assisté vers la cible</button>
+      <button id="mine" class="primary">Activer l’extraction [E]</button>
+    </section>
+  </aside>
+</main>
+
+<footer>
+  <div class="cargo"><small>SOUTE / FERRITE</small><strong id="cargo">0 / 30 t</strong><div class="track"><i id="cargobar"></i></div></div>
+  <div class="log"><small>JOURNAL DE BORD</small><span id="notice" role="status"></span></div>
+  <button id="dock" class="primary">Services de la station [F]</button>
+</footer>
+
+<dialog id="stationpanel">
+  <div class="dialoghead"><div><small>STATION</small><h2>Relais-9</h2></div><button id="closestation" aria-label="Fermer">✕</button></div>
+  <div class="trade">
+    <div><small>FERRITE · PRIX LOCAL NET</small><strong><span id="price">18</span> <span>Cr / t</span></strong><p id="gross"></p></div>
+    <button id="sell" class="primary">Vendre la cargaison</button>
+  </div>
+  <div class="sectiontitle">MODULES <span id="slots"></span></div>
+  <div id="modules"></div>
+  <div class="stationbottom">
+    <span>Crédits : <b id="stationcredits"></b></span>
+    <button id="refuel">Faire le plein</button>
+    <button id="launch" class="primary">Quitter la station ↗</button>
+  </div>
+</dialog>
+
+<dialog id="helppanel">
+  <div class="dialoghead"><h2>Prendre les commandes</h2><button id="closehelp" aria-label="Fermer">✕</button></div>
+  <p>Orientez le vaisseau, accélérez, freinez. Touchez une station ou un gisement dans la vue, ou une ligne de la liste Contacts, pour en faire votre destination.</p>
+  <details open><summary>Clavier</summary><dl>
+    <dt>Z / W / ↑</dt><dd>Propulsion principale</dd>
+    <dt>Q / A / ← · D / →</dt><dd>Rotation</dd>
+    <dt>S / ↓</dt><dd>Propulsion inverse</dd>
+    <dt>Espace</dt><dd>Freinage assisté</dd>
+    <dt>E</dt><dd>Extraction</dd>
+    <dt>F</dt><dd>Amarrage / services</dd>
+    <dt>Molette</dt><dd>Zoom</dd>
+  </dl></details>
+  <details><summary>Manette</summary><p>Branchez une manette et appuyez sur un bouton pour l’activer.</p><dl>
+    <dt>Stick gauche</dt><dd>Orienter le vaisseau</dd>
+    <dt>Gâchettes droite / gauche</dt><dd>Propulsion principale / inverse</dd>
+    <dt>RB</dt><dd>Extraction</dd>
+    <dt>LB (maintenir)</dt><dd>Refroidissement actif</dd>
+    <dt>B</dt><dd>Freinage assisté</dd>
+    <dt>X</dt><dd>Cibler le contact le plus proche</dd>
+    <dt>Y</dt><dd>Amarrage / services</dd>
+  </dl></details>
+  <details><summary>Portées</summary><p>Extraction : à moins de 185 m du gisement et sous 55 m/s. Amarrage : à moins de 220 m de la station et sous 45 m/s. Le pilotage manuel coupe le cap assisté.</p></details>
+  <button id="rescue">Remorquage : 50 Cr max. + perte de cargaison</button>
+  <p class="foot">Version solo · la partie est sauvegardée dans ce navigateur.</p>
+</dialog>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

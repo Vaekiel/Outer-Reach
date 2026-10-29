@@ -1,0 +1,12 @@
+{
+  "name": "outer-reach",
+  "version": "0.1.0",
+  "description": "Outer Reach — jeu de prospection et de minage spatial, jouable dans le navigateur.",
+  "private": true,
+  "type": "module",
+  "license": "SEE LICENSE IN LICENSE",
+  "author": "Vaekiel",
+  "scripts": {
+    "test": "node --test tests/sim.test.js"
+  }
+}
