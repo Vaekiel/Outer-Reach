@@ -1,122 +1,108 @@
-# ✦ OUTER REACH ✦
+<p align="center">
+  <img src="design/revamp-graphique/fonds-espace-systemes.png" alt="OUTER REACH — les systèmes des Marches d’Orée" width="860">
+</p>
 
-### Prospecteurs des Marches d’Orée
+<h1 align="center">✦ OUTER REACH ✦</h1>
 
-Chaque système cache une route. Chaque astéroïde, une possibilité.
+<p align="center">
+  <strong>Prospecteurs des Marches d’Orée</strong>
+</p>
+<p align="center"><em>Chaque système cache une route. Chaque astéroïde, une possibilité.</em></p>
 
-* * *
+<p align="center">
+  <a href="OFFLINE.md"><img src="https://img.shields.io/badge/▶_JOUER-EN_LOCAL-b99af0?style=for-the-badge&labelColor=17172c" alt="Jouer à Outer Reach en local"></a>
+  &nbsp;
+  <img src="https://img.shields.io/badge/100%25-GRATUIT-e3bf86?style=for-the-badge&labelColor=17172c" alt="100 % gratuit">
+  &nbsp;
+  <img src="https://img.shields.io/badge/SANS-COMPTE-91d9dc?style=for-the-badge&labelColor=17172c" alt="Aucun compte nécessaire">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/univers-science--fiction-d9c0f2?labelColor=17172c" alt="Univers science-fiction">
+  <img src="https://img.shields.io/badge/style-pixel--art%20HD-d9c0f2?labelColor=17172c" alt="Pixel art HD">
+  <img src="https://img.shields.io/badge/mode-solo%20hors%20ligne-d9c0f2?labelColor=17172c" alt="Solo hors ligne">
+  <img src="https://img.shields.io/badge/supports-PC%20%7C%20mobile%20%7C%20tablette-d9c0f2?labelColor=17172c" alt="PC, mobile et tablette">
+</p>
+
+---
 
 ## ✧ Les Marches s’ouvrent
 
 Aux confins de l’espace connu, les routes ne sont jamais vraiment tracées.
-Les stations attendent les cargaisons, les ceintures minières abritent encore
-des ressources inconnues et les anciennes portes relient des systèmes que peu
-de pilotes osent explorer.
 
-**Outer Reach** est un jeu de prospection et de minage spatial en pixel art,
-jouable directement dans un navigateur. Pilote ton vaisseau, explore les
-systèmes, extrais des minerais, améliore ton équipement et décide jusqu’où tu
-veux pousser l’expédition.
+Les stations attendent les cargaisons, les ceintures minières abritent encore des ressources inconnues et les anciennes portes relient des systèmes que peu de pilotes osent explorer.
 
-> L’espace est vaste. Les premières coordonnées sont à toi.
+**OUTER REACH** est un jeu de prospection et de minage spatial en pixel art, à découvrir librement dans votre navigateur. Pilotez votre vaisseau, explorez les Marches d’Orée, enrichissez votre soute et laissez-vous surprendre par ce qui se trouve au-delà de la prochaine balise.
 
-## ▶ Entrer dans Outer Reach
+Certaines routes se dessinent au premier regard. D’autres demandent un meilleur équipement et un peu plus de courage.
 
-Outer Reach fonctionne en mode solo, hors ligne et sans compte Google. La
-progression est sauvegardée automatiquement dans le navigateur utilisé.
+> **Le reste vous appartient.** Pas de solution imposée, pas de parcours unique : la frontière commence avec votre prochaine expédition.
 
-### Lancer le jeu localement
+## ▶ Entrer dans OUTER REACH
 
-Depuis la racine du projet :
+**[✦ Lancer Outer Reach — Jouer hors ligne](OFFLINE.md)**
+
+Aucune installation ni inscription n’est nécessaire. Le jeu fonctionne dans un navigateur moderne, sur ordinateur, tablette ou téléphone, à partir d’un serveur local.
+
+Votre progression est **enregistrée automatiquement et localement** dans votre navigateur. Elle reste liée à cet appareil et à ce navigateur : effacer ses données peut effacer la sauvegarde.
+
+### Lancer le jeu
+
+Depuis la racine du dépôt :
 
 ```bash
 ./scripts/serve-offline.sh
 ```
 
-Puis ouvre [http://127.0.0.1:8080/](http://127.0.0.1:8080/).
+Puis ouvrez [http://127.0.0.1:8080/](http://127.0.0.1:8080/). Sous Windows, le serveur PowerShell du dossier `scripts/` peut également être utilisé.
 
-Sous Windows, tu peux aussi lancer :
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts\serve.ps1
-```
-
-Le jeu utilise des modules JavaScript ES. Il doit donc être ouvert depuis un
-petit serveur local, et non directement avec `file://`.
-
-## 💾 Une progression qui reste à bord
-
-La sauvegarde solo est conservée dans le `localStorage` du navigateur. Aucun
-compte et aucune connexion Internet ne sont nécessaires pour jouer.
-
-La sauvegarde reste liée à cet appareil et à ce navigateur. Effacer les
-données du site peut effacer la progression.
+Les fichiers ne sont **jamais envoyés à Google ou à un serveur de compte** dans le mode solo : le jeu, sa sauvegarde et ses ressources fonctionnent localement sur votre appareil.
 
 ## ✨ Ce qui vous attend
 
-- **Un vaisseau à faire évoluer** — équipe la coque avec des modules adaptés
-  au minage, à la propulsion, à la capacité de soute ou à l’exploration.
-- **Des ceintures minières** — approche les astéroïdes, extrais leurs minerais
-  et surveille la chaleur ainsi que la capacité de ta soute.
-- **Des stations et des ports** — amarres-toi, vends ta cargaison, ravitaille
-  ton vaisseau et prépare la prochaine rotation.
-- **Des systèmes à parcourir** — utilise les portes de transit et découvre les
-  quinze systèmes des Marches d’Orée.
-- **Des sites à sonder** — explore les épaves, les anomalies et les lieux
-  verrouillés qui demandent parfois un équipement spécifique.
-- **Un trafic spatial vivant** — croise des vaisseaux civils et observe les
-  activités qui animent les systèmes.
-- **Une aventure à ton rythme** — aucune connexion obligatoire, aucun
-  abonnement et aucun achat en argent réel.
+- **Un vaisseau à faire évoluer** — équipez votre coque avec des modules adaptés au minage, à la propulsion, à la capacité de soute ou à l’exploration.
+- **Des ceintures minières** — approchez les astéroïdes, extrayez leurs minerais et surveillez la chaleur ainsi que la capacité de votre soute.
+- **Des stations et des ports** — amarrez-vous, vendez votre cargaison, ravitaillez votre vaisseau et préparez la prochaine rotation.
+- **Des systèmes à parcourir** — utilisez les portes de transit et découvrez les quinze systèmes des Marches d’Orée.
+- **Des sites à sonder** — explorez les épaves, les anomalies et les lieux verrouillés qui demandent parfois un équipement spécifique.
+- **Un trafic spatial vivant** — croisez des vaisseaux civils et observez les activités qui animent les systèmes.
+- **Une aventure à votre rythme** — jouez quand vous le souhaitez, sans abonnement, sans boutique payante et sans compte obligatoire.
 
-## 🌙 Une frontière encore en construction
+## 🌙 Saison I — Les Marches d’Orée
 
-Outer Reach est un projet indépendant en développement. Les systèmes, les
-vaisseaux, les interfaces, les missions et les activités continueront
-d’évoluer au fil des versions.
+L’aventure débute autour du Relais-9, première étape des prospecteurs qui s’engagent au-delà des routes familières.
 
-Les tests automatisés du projet couvrent les systèmes de jeu, la navigation,
-le minage, l’amarrage, les sauvegardes et plusieurs éléments de l’interface :
+C’est le premier pas dans un univers appelé à grandir : de nouveaux systèmes, vaisseaux, sites et équipements pourront rejoindre progressivement la frontière.
+
+**Aucune course contre la montre : votre progression locale reste jouable hors ligne.**
+
+## 💬 Une communauté pour partager ses expéditions
+
+Une route vous semble imprécise ? Un astéroïde refuse de livrer son minerai ? Vous avez une théorie, une trouvaille à montrer ou une suggestion pour améliorer l’expédition ?
+
+Pour signaler un problème technique ou proposer une idée, vous pouvez utiliser les [issues du dépôt](https://github.com/Vaekiel/Outer-Reach/issues), en indiquant le navigateur, l’appareil et les étapes nécessaires pour reproduire le problème.
+
+Préservons la découverte des autres pilotes : évitez de révéler les solutions ou les lieux secrets dans les titres des discussions.
+
+## ✦ Un jeu indépendant, gratuit et en évolution
+
+**OUTER REACH** est développé par **Vaekiel**. Le jeu est **entièrement gratuit** et ne propose aucun achat en argent réel.
+
+Le projet est encore en développement : les illustrations, l’interface, les systèmes, les équilibrages et les activités continueront d’évoluer. Les retours des joueurs nous aident à étendre la frontière tout en gardant intact le plaisir d’explorer.
+
+Les tests automatisés du projet peuvent être lancés avec :
 
 ```bash
 npm test
 ```
 
-## 💬 Retours et développement
-
-Une route vous semble imprécise ? Un astéroïde refuse de livrer son minerai ?
-Une idée pourrait améliorer l’expédition ? Ouvre une issue dans le dépôt
-[Outer Reach](https://github.com/Vaekiel/Outer-Reach) en indiquant :
-
-- le navigateur et l’appareil utilisés ;
-- les étapes pour reproduire le problème ;
-- le système et la station concernés, si nécessaire ;
-- les messages visibles dans la console du navigateur.
-
-Le projet peut être joué et développé sans connexion à Google. Les fonctions
-multijoueur, tchat et sauvegarde cloud ne font pas partie du mode solo hors
-ligne.
-
-## ✦ Un jeu indépendant, gratuit et en évolution
-
-Outer Reach est développé par **Vaekiel**. Le jeu est gratuit et ne propose
-aucun achat en argent réel.
-
-Le projet est encore en développement : les illustrations, les systèmes, les
-équilibrages et les fonctionnalités pourront évoluer. Les retours servent à
-étendre la frontière sans perdre le plaisir de l’exploration.
-
 ## 📜 Droits et utilisation
 
-© 2026 Vaekiel — Tous droits réservés.
+© 2026 **Vaekiel** — Tous droits réservés.
 
-Le dépôt est destiné au développement et à la consultation du projet. La
-réutilisation du code, des illustrations, des sons, des polices ou des
-contenus du jeu doit respecter la licence du dépôt et les droits de leurs
-auteurs.
+Le dépôt est public pour consultation et développement. La réutilisation du code, des illustrations, des sons, des polices ou des contenus du jeu doit respecter les droits de leurs auteurs et les conditions applicables au dépôt.
 
-* * *
+---
 
-> « Au-delà de la dernière balise, chaque pilote écrit sa propre carte. »
-
-_{✦ OUTER REACH · Prospecteurs des Marches d’Orée ✦}_
+<p align="center"><em>« Au-delà de la dernière balise, chaque pilote écrit sa propre carte. »</em></p>
+<p align="center"><sub>✦ OUTER REACH · Prospecteurs des Marches d’Orée · Vaekiel ✦</sub></p>
