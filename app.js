@@ -21,18 +21,10 @@ import {mateGoal} from './compass.js';
 import {render} from './render.js';
 import {createContextMenu} from './context-menu.js';
 import {guidance} from './navigation.js';
-import {firebaseConfig} from './firebase-config.js';
-import {initFirebase,watchAuth,signInGoogle,signOutUser,loadCloudSave,saveCloudSave,getDb} from './auth.js';
-import {createChat} from './chat.js';
-import {createPresence} from './presence.js';
 import {createChatUI} from './chat-ui.js';
-import {displayName} from './chat-channels.js';
 import {renderPairs} from './ui-lists.js';
-import {createSocial} from './social.js';
 import {createSocialUI,avatarNode} from './social-ui.js';
-import {createTrades} from './trade.js';
 import {createTradeUI} from './trade-ui.js';
-import {createSquadLive} from './squad-live.js';
 import {worldSystems} from './galaxy.js';
 const soundscape=createSoundscape();
 const $=id=>document.getElementById(id),w=createWorld(),input={};let zoom=.67,auto=false,pending=null;let miningSession=null,stationMessage='';
@@ -43,17 +35,18 @@ try{applySave(JSON.parse(localStorage.getItem('oree-v01')));}catch{}
 normalizeCareer(w.ship);normalizeResources(w.ship);
 if(normalizeEquipment(w.ship)){w.notice='Équipement adapté aux nouveaux emplacements. Tous vos modules sont conservés dans la réserve.';stationMessage=w.notice;}
 function saveData(){return {version:3,universe:saveUniverse(w),ship:w.ship,sold:w.sold,bought:w.bought,ores:w.asteroids.map(a=>a.ore),pseudo,lastPseudoChange};}
-function save(){const data=saveData();try{localStorage.setItem('oree-v01',JSON.stringify(data));}catch{w.notice='Sauvegarde locale indisponible dans ce navigateur.';}if(currentUser&&cloudReady)saveCloudSave(currentUser.uid,data).catch(()=>{w.notice='Sauvegarde cloud indisponible pour le moment.';ui();});}
+function save(){const data=saveData();try{localStorage.setItem('oree-v01',JSON.stringify(data));}catch{w.notice='Sauvegarde locale indisponible dans ce navigateur.';}}
 function pseudoCooldown(){return lastPseudoChange?Math.max(0,PSEUDO_COOLDOWN-(Date.now()-lastPseudoChange)):0;}
 function formatCooldown(ms){const h=Math.floor(ms/3600000),m=Math.floor((ms%3600000)/60000);return h>0?h+' h '+String(m).padStart(2,'0')+' min':m+' min';}
 
 // Compte Google : identification, profil (pseudo/avatar/progression) et sauvegarde cloud (voir README.md pour la configuration Firebase).
-let currentUser=null,cloudReady=false;
-const cloudEnabled=!!firebaseConfig.apiKey&&!firebaseConfig.apiKey.startsWith('REMPLACER');
+let currentUser=null;
+// Mode solo hors ligne : aucune dépendance Firebase/Google n'est chargée.
+const cloudEnabled=false;
 const GOOGLE_G='<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>';
 const profileDialog=document.createElement('dialog');profileDialog.id='profiledialog';profileDialog.setAttribute('aria-labelledby','profile-title');
 profileDialog.innerHTML='<div class="dialoghead"><div><small>COMPTE</small><h2 id="profile-title">Profil du pilote</h2></div><button id="closeprofile" aria-label="Fermer">✕</button></div>'
-+'<div id="profile-guest"><p>Connectez-vous avec Google pour personnaliser votre pseudo et votre avatar, et sauvegarder votre progression dans le cloud.</p><button id="signin" class="google-btn">'+GOOGLE_G+'<span>Se connecter avec Google</span></button></div>'
++'<div id="profile-guest"><p>Mode hors ligne : votre progression et votre pseudo sont sauvegardés dans ce navigateur.</p><button id="signin" class="google-btn" hidden>Connexion Google désactivée</button></div>'
 +'<div id="profile-account" hidden>'
 +'<div class="profile-identity"><span class="avatar-frame large"><img id="profileavatar" alt=""></span><div><label for="pseudoinput">Pseudo affiché</label><input id="pseudoinput" type="text" maxlength="24" placeholder="Votre pseudo"><small id="pseudo-cooldown"></small></div></div>'
 +'<div class="sectiontitle">PROGRESSION</div>'
@@ -69,10 +62,10 @@ profileDialog.innerHTML='<div class="dialoghead"><div><small>COMPTE</small><h2 i
 document.body.append(profileDialog);
 $('closeprofile').onclick=()=>profileDialog.close();
 const hudAccount=$('hud-account');
-function updateAccountUI(user){$('profile-guest').hidden=!!user;$('profile-account').hidden=!user;const avatar=$('hudavatar'),fallback=$('hudavatar-fallback');if(user?.photoURL){$('profileavatar').src=user.photoURL;avatar.src=user.photoURL;avatar.hidden=false;fallback.hidden=true;}else{avatar.hidden=true;fallback.hidden=false;}}
+function updateAccountUI(user){$('profile-guest').hidden=true;$('profile-account').hidden=false;const avatar=$('hudavatar'),fallback=$('hudavatar-fallback');if(user?.photoURL){$('profileavatar').src=user.photoURL;avatar.src=user.photoURL;avatar.hidden=false;fallback.hidden=true;}else{avatar.hidden=true;fallback.hidden=false;}}
 const XP_PER_LEVEL=25;
 function xpLevel(xp){xp=Math.max(0,Math.floor(xp));return {level:Math.floor(xp/XP_PER_LEVEL)+1,into:xp%XP_PER_LEVEL};}
-function updateProfile(){updateAccountUI(currentUser);if(!currentUser)return;const cooldown=pseudoCooldown(),input=$('pseudoinput');if(document.activeElement!==input)input.value=pseudo;input.disabled=cooldown>0;$('pseudo-cooldown').textContent=cooldown>0?'Modifiable dans '+formatCooldown(cooldown):'';const s=w.ship,hull=getHull(s),cap=capacity(s);$('stat-ship').textContent=hull.name;$('stat-credits').textContent=Math.floor(s.credits)+' Cr';$('stat-xp').textContent=Math.floor(s.miningXp)+' XP';$('stat-sold').textContent=Math.floor(w.sold)+' t';$('stat-bought').textContent=String(w.bought);$('stat-hulls').textContent=s.ownedHulls.length+' / '+hulls.length;const lvl=xpLevel(s.miningXp);$('profile-levelnum').textContent='Niveau '+lvl.level;$('profile-levelbar').style.width=(lvl.into/XP_PER_LEVEL*100)+'%';$('profile-levelvalue').textContent=lvl.into+' / '+XP_PER_LEVEL+' XP';const cargoPct=cap?Math.min(100,s.cargo/cap*100):0;const heatPct=Math.min(100,Math.max(0,s.heat));const fuelPct=Math.min(100,Math.max(0,s.fuel));$('profile-hull').style.width='100%';$('profile-hull-value').textContent='100 %';$('profile-cargo').style.width=cargoPct+'%';$('profile-cargo-value').textContent=s.cargo.toFixed(1)+' / '+cap+' t';$('profile-heat').style.width=heatPct+'%';$('profile-heat-value').textContent=Math.round(s.heat)+' %';$('profile-fuel').style.width=fuelPct+'%';$('profile-fuel-value').textContent=Math.round(s.fuel)+' %';}
+function updateProfile(){updateAccountUI(currentUser);const cooldown=pseudoCooldown(),input=$('pseudoinput');if(document.activeElement!==input)input.value=pseudo;input.disabled=cooldown>0;$('pseudo-cooldown').textContent=cooldown>0?'Modifiable dans '+formatCooldown(cooldown):'';const s=w.ship,hull=getHull(s),cap=capacity(s);$('stat-ship').textContent=hull.name;$('stat-credits').textContent=Math.floor(s.credits)+' Cr';$('stat-xp').textContent=Math.floor(s.miningXp)+' XP';$('stat-sold').textContent=Math.floor(w.sold)+' t';$('stat-bought').textContent=String(w.bought);$('stat-hulls').textContent=s.ownedHulls.length+' / '+hulls.length;const lvl=xpLevel(s.miningXp);$('profile-levelnum').textContent='Niveau '+lvl.level;$('profile-levelbar').style.width=(lvl.into/XP_PER_LEVEL*100)+'%';$('profile-levelvalue').textContent=lvl.into+' / '+XP_PER_LEVEL+' XP';const cargoPct=cap?Math.min(100,s.cargo/cap*100):0;const heatPct=Math.min(100,Math.max(0,s.heat));const fuelPct=Math.min(100,Math.max(0,s.fuel));$('profile-hull').style.width='100%';$('profile-hull-value').textContent='100 %';$('profile-cargo').style.width=cargoPct+'%';$('profile-cargo-value').textContent=s.cargo.toFixed(1)+' / '+cap+' t';$('profile-heat').style.width=heatPct+'%';$('profile-heat-value').textContent=Math.round(s.heat)+' %';$('profile-fuel').style.width=fuelPct+'%';$('profile-fuel-value').textContent=Math.round(s.fuel)+' %';}
 function openProfile(){closeDrawers();clear();menu.close();updateProfile();profileDialog.showModal();}
 
 // Jauges compactes toujours visibles, entre la vitesse et la cargaison en bas de l'écran.
@@ -88,10 +81,7 @@ function updateMiniBars(){const s=w.ship;const heatPct=Math.min(100,Math.max(0,s
 $('pseudoinput').addEventListener('change',()=>{const input=$('pseudoinput'),value=input.value.trim().slice(0,24);if(pseudoCooldown()>0||value===pseudo){input.value=pseudo;return;}pseudo=value;lastPseudoChange=Date.now();updateProfile();save();chatUI?.setPseudo(displayName(pseudo,currentUser?.displayName,currentUser?.uid));socialUI?.setPseudo(displayName(pseudo,currentUser?.displayName,currentUser?.uid));});
 async function onSignedIn(user){cloudReady=false;currentUser=user;updateProfile();try{const cloudData=await loadCloudSave(user.uid);if(cloudData){applySave(cloudData);cloudReady=true;w.notice='Partie cloud chargée pour '+(pseudo||user.displayName||user.email)+'.';}else{await saveCloudSave(user.uid,saveData());cloudReady=true;w.notice='Partie locale synchronisée sur votre compte Google.';}}catch{w.notice='Connexion au cloud impossible pour le moment.';}updateProfile();ui();chatUI?.setUser(user,{pseudo:displayName(pseudo,user.displayName,user.uid),systemId:w.systemId,portId:w.ship.docked?w.portId:null});socialUI?.setUser(user,{pseudo:displayName(pseudo,user.displayName,user.uid),systemId:w.systemId});tradeUI?.setUser(user);lastPlaceKey='';syncPlace();}
 function onSignedOut(){cloudReady=false;currentUser=null;pseudo='';lastPseudoChange=0;updateProfile();tradeUI?.setUser(null);chatUI?.setUser(null);socialUI?.setUser(null);}
-if(cloudEnabled){initFirebase(firebaseConfig);watchAuth(user=>user?onSignedIn(user):onSignedOut());}
-else{$('signin').disabled=true;$('signin').title='Compte cloud non configuré (voir README.md).';}
-$('signin').onclick=()=>{if(!cloudEnabled)return;signInGoogle().catch(()=>{w.notice='Connexion Google annulée ou indisponible.';ui();});};
-$('signout').onclick=()=>signOutUser();
+if(!cloudEnabled){$('signin').disabled=true;$('signin').hidden=true;$('signout').hidden=true;}
 function act(type,arg){const wasMining=w.mining,oldSystem=w.systemId;command(w,type,arg);if(oldSystem!==w.systemId){miningSession=null;$('asteroidlist').dataset.ids='';chatUI?.setSystem(w.systemId);socialUI?.setSystem(w.systemId);}if(type==='mine'&&!wasMining&&w.mining)miningSession={target:w.target,start:w.ship.cargo};if(['sell','buy','equip','unequip','refuel','craft','board','deposit','withdraw','refine','craftmodule'].includes(type))stationMessage=w.notice;save();ui();}
 // Portée d'amarrage : près du centre de la station ou de la pose d'un sas (même règle que simulation.js).
 const inDockReach=s=>distance(s,station)<220||distance(s,approachPoint(station,s))<180;
