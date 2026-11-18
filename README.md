@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="design/revamp-graphique/fonds-espace-systemes.png" alt="OUTER REACH — les systèmes des Marches d’Orée" width="860">
+  <img src="docs/banner.png" alt="OUTER REACH — les systèmes des Marches d’Orée" width="860">
 </p>
 
 <h1 align="center">✦ OUTER REACH ✦</h1>
