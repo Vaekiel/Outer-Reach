@@ -1,0 +1,59 @@
+/* Équipage : cards de pilotes compactes (portrait, pseudo, lieu, actions), onglets et bandeau d'invitation.
+   Chargée après ui-refresh.css ; sélecteurs « html body » pour primer sur les styles génériques des boutons. */
+html body #crew{position:relative}
+html body .crew-badge{display:inline-block;min-width:16px;padding:0 4px;background:var(--hud-gold);color:#0c1721;font:10px/16px var(--pixel-font)!important;text-align:center;box-shadow:1px 1px #070c14}
+html body #crew>.crew-badge{position:absolute;top:-4px;right:-4px}
+html body .crew-tab .crew-badge{margin-left:4px;vertical-align:1px}
+html body .crew-badge[hidden]{display:none!important}
+
+html body .crew-window{width:min(480px,calc(100vw - 20px))}
+/* Largeurs proportionnelles aux libellés : « Demandes » garde sa place sans rogner les autres onglets. */
+html body .crew-tabs{display:flex;gap:4px;margin:0 0 8px}
+html body .crew-tab{flex:1 1 auto;min-height:38px!important;padding:2px 4px!important;font-size:11px!important;white-space:nowrap;background-color:#142b38;color:var(--hud-muted)}
+html body .crew-tab[aria-selected='true']{border-image-source:url('./assets/ui/button-hover.png');background-color:#304b57;color:var(--hud-gold)}
+html body .crew-status{margin:0 0 8px!important;padding:6px 8px;border-left:3px solid var(--hud-gold);background:#0d1d26;color:#e1d6ad}
+html body .crew-status--error{border-left-color:#e06a6a;color:#f0b3b3}
+html body .crew-section{margin:0 0 10px}
+html body .crew-section__title{margin:0 0 4px!important;font-size:11px!important;color:var(--hud-gold);letter-spacing:.5px;text-transform:uppercase}
+html body .crew-empty{margin:4px 0!important;color:var(--hud-muted)}
+
+/* Card pilote : portrait | pseudo + lieu | actions ; les actions passent sous le texte si la largeur manque. */
+html body .crew-card{display:grid;grid-template-columns:32px minmax(0,1fr) auto;align-items:center;gap:4px 8px;padding:5px 0;border-bottom:1px solid #1a2c38}
+html body .crew-card:last-child{border-bottom:0}
+html body .crew-avatar{display:block;width:32px;height:32px;box-shadow:0 0 0 1px #3c5561;background:#0c1721}
+html body .crew-avatar :is(img,svg){display:block;width:32px;height:32px;object-fit:cover}
+html body .crew-avatar svg{image-rendering:pixelated}
+html body .crew-card__text{min-width:0}
+html body .crew-card__name{display:block;color:var(--hud-text);font-size:12px!important;line-height:1.3!important;overflow-wrap:break-word}
+html body .crew-card__sub{display:block;color:var(--hud-muted);font-size:10px!important;line-height:1.3!important}
+html body .crew-card__actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px}
+html body .crew-card__actions button{min-height:34px!important;padding:2px 8px!important;font-size:11px!important;white-space:nowrap}
+@media(max-width:420px){html body .crew-card{grid-template-columns:32px minmax(0,1fr)}html body .crew-card__actions{grid-column:1/-1;justify-content:stretch}html body .crew-card__actions button{flex:1 1 0}}
+
+html body .crew-search{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;margin:0 0 10px}
+html body .crew-search input{min-width:0;min-height:38px;box-sizing:border-box;padding:4px 8px;background:#0c1721;color:var(--hud-text);border:2px solid #526b76;font:12px/1.3 var(--pixel-font)}
+html body .crew-search input:focus{outline:none;border-color:var(--hud-gold)}
+html body .crew-search button{min-height:38px!important}
+html body :is(.crew-leave,.crew-refresh){width:100%;margin-top:4px}
+
+/* Bandeau d'invitation : non modal, sous le cartouche, ne met pas le pilotage en pause. */
+html body .crew-toast{position:fixed;z-index:30;left:50%;top:calc(var(--safe-top) + 82px);transform:translateX(-50%);width:min(420px,calc(100vw - 16px));box-sizing:border-box;display:grid;grid-template-columns:32px minmax(0,1fr);align-items:center;gap:6px 10px;padding:8px 10px;border:4px solid transparent;border-image:url('./assets/ui/panel.png') 8 fill / 4px / 0 stretch;background:var(--hud-panel);background-clip:padding-box;image-rendering:pixelated}
+html body .crew-toast[hidden]{display:none!important}
+html body .crew-toast__text{margin:0!important;color:var(--hud-gold);font-size:12px!important;line-height:1.35!important}
+html body .crew-toast .crew-card__actions{grid-column:1/-1;justify-content:stretch}
+html body .crew-toast .crew-card__actions button{flex:1 1 0}
+
+/* Marques de relation : amis en vert (liseré + « AMI »), coéquipier en vert avec liseré doré (couleur de son losange radar) et « GROUPE ». */
+html body .pilot-tag{display:inline-block;flex:0 0 auto;padding:0 4px;border:1px solid currentColor;font-size:9px!important;line-height:14px!important;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap;vertical-align:1px}
+html body .pilot-tag--friend{color:#63dc91;background:#0f2a1f}
+html body .pilot-tag--mate{color:#e6c88f;background:#2a2213}
+html body .chat-msg:is(.chat-msg--friend,.chat-msg--mate) .chat-msg__author{color:#63dc91}
+html body .chat-msg--friend .chat-msg__avatar{box-shadow:0 0 0 2px #63dc91}
+html body .chat-msg--mate .chat-msg__avatar{box-shadow:0 0 0 2px #e6c88f}
+html body .crew-card--friend .crew-avatar{box-shadow:0 0 0 2px #63dc91}
+html body .crew-card--mate .crew-avatar{box-shadow:0 0 0 2px #e6c88f}
+html body .crew-card:is(.crew-card--friend,.crew-card--mate) .crew-card__name{color:#63dc91}
+
+/* Portrait et pseudo cliquables dans le tchat (menu Équipage). */
+html body .chat-msg__who{cursor:pointer}
+html body .chat-msg__author.chat-msg__who:hover{text-decoration:underline}

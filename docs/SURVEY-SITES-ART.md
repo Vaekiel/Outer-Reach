@@ -1,0 +1,9 @@
+# Zones à sonder
+
+Archives de télémétrie et épaves patrimoniales : quatre silhouettes chacune, dans les quinze systèmes. Taille de rendu conservée à 144. Quatre teintes de capteurs conservées ; règles de sondage et déplacement inchangées.
+
+Atlas `assets/survey-sites.png`, généré avec imagegen intégré. Découpes mesurées aux colonnes 444, 850, 1330 sur 1774 pixels ; transparence calculée et sprites mis en cache.
+
+## Consigne
+
+Create a game sprite atlas for Outer Reach Online matching the attached industrial station art exactly: fine detailed pixel art, orthographic TOP DOWN, worn gunmetal, copper pipes, restrained teal lights, crisp textured metal. Exactly 8 isolated survey sites in 4 columns and 2 rows, equal square cells, generous pure black empty margins, black background no stars no text. Top row FOUR different abandoned telemetry archives: 1 compact central data core with two broad sensor wings, 2 long parallel antenna banks with connecting core, 3 compact square frame observatory with central recorder and dishes, 4 asymmetric broken research probe with four differently sized sensor arms. Bottom row FOUR different ancient shipwrecks: 1 fractured industrial freighter bow with exposed ribs, 2 severed long engine section, 3 two broken hull halves with wires and scattered fragments between, 4 collapsed cargo ship skeleton with containers. Wrecks clearly derelict unpowered with only tiny dim amber/cyan recorder indicators, torn plating exposed copper machinery and small nearby debris contained WITHIN its cell. Archives distinguishable from inhabited stations, sensor/data equipment obvious. All 8 full silhouettes clearly separated with at least 35px empty margin on every side of every cell; no cropping. No perspective/isometric, no glow haze. 2048x1024 landscape atlas. Same texture/detail as reference; objects will render at144px so strong silhouettes.

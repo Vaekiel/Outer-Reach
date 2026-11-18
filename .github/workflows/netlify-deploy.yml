@@ -1,0 +1,89 @@
+name: Teste et publie les aperçus de branche sur Netlify
+
+# Le site est statique : on publie directement une archive ZIP via l'API
+# Netlify, avec branch=dev explicite. Cela évite la restriction de
+# contributeur Git qui faisait échouer les builds déclenchés par Git/Build
+# Hook sur le plan gratuit, SANS pour autant publier sur la production :
+# l'appel crée un déploiement de branche (<branche>--oree-flight.netlify.app :
+# dev pour le développement, dev-grf pour le revamp graphique),
+# distinct du site principal (oree-flight.netlify.app), qui reste piloté
+# par l'intégration Git native de Netlify sur `master`.
+on:
+  push:
+    branches: [dev, dev-grf]
+
+env:
+  NETLIFY_SITE_ID: ea6c84cd-70a7-4525-ba2f-93f186a78c79
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupère le dépôt
+        uses: actions/checkout@v4
+
+      - name: Prépare Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Vérifie les tests
+        run: npm test
+
+      - name: Prépare l'archive statique
+        run: |
+          zip -qr site.zip . \
+            -x '.git/*' \
+               '.github/*' \
+               'tests/*' \
+               'scripts/*' \
+               '*.md' \
+               '.gitignore' \
+               'package.json' \
+               'package-lock.json' \
+               'site.zip'
+
+      - name: Publie l'aperçu de la branche sur Netlify (déploiement de branche, pas la production)
+        run: |
+          response=$(curl -fsS \
+            -H 'Content-Type: application/zip' \
+            -H "Authorization: Bearer ${{ secrets.NETLIFY_AUTH_TOKEN }}" \
+            --data-binary '@site.zip' \
+            "https://api.netlify.com/api/v1/sites/${NETLIFY_SITE_ID}/deploys?branch=${{ github.ref_name }}")
+
+          deploy_id=$(echo "$response" | jq -r '.id // empty')
+          if [ -z "$deploy_id" ]; then
+            echo '::error::Netlify n’a pas renvoyé d’identifiant de déploiement.'
+            exit 1
+          fi
+
+          echo "Déploiement Netlify créé : $deploy_id"
+
+          for i in $(seq 1 60); do
+            deploy=$(curl -fsS \
+              -H "Authorization: Bearer ${{ secrets.NETLIFY_AUTH_TOKEN }}" \
+              "https://api.netlify.com/api/v1/deploys/${deploy_id}")
+            state=$(echo "$deploy" | jq -r '.state // "inconnu"')
+            echo "Tentative $i : état=$state"
+
+            if [ "$state" = 'ready' ]; then
+              branch=$(echo "$deploy" | jq -r '.branch // "?"')
+              url=$(echo "$deploy" | jq -r '.deploy_ssl_url // .ssl_url // .url // empty')
+              echo "Publication réussie (branche: $branch) : $url"
+              exit 0
+            fi
+
+            if [ "$state" = 'error' ]; then
+              message=$(echo "$deploy" | jq -r '.error_message // "Erreur Netlify sans détail."')
+              echo "::error::Le déploiement Netlify a échoué : $message"
+              exit 1
+            fi
+
+            sleep 5
+          done
+
+          echo '::error::Délai dépassé en attendant la publication Netlify.'
+          exit 1

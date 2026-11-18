@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createWorld,command} from '../simulation.js';
+const calls=[];
+const ctx=new Proxy({drawImage(...args){calls.push(args);},getImageData(x,y,width,height){return {data:new Uint8ClampedArray(width*height*4)};}}, {get(t,k){return k in t?t[k]:()=>{};}});
+globalThis.document={createElement:()=>({width:128,height:128,getContext:()=>ctx})};
+globalThis.Image=class{complete=true;get naturalWidth(){return this.src?.includes('planet-environments')?1536:2172;}get naturalHeight(){return this.src?.includes('planet-environments')?1024:724;}};
+const {render}=await import('../render.js');
+test('rendu des quatre coques, à quai et en vol, dans les deux systèmes',()=>{const canvas={clientWidth:390,clientHeight:844,width:0,height:0,getContext:()=>ctx};const radar={getContext:()=>ctx};const w=createWorld();for(const systemId of ['oree','lisiere']){w.systemId=systemId;w.asteroids=w.sectors[systemId].asteroids;for(const hullId of ['sillon','veine','strate','aiguille'])for(const docked of [true,false]){Object.assign(w.ship,{hullId,docked});render(canvas,radar,w,.67,{});}}assert.ok(calls.length>0);});
+test('rendu du coéquipier dans la vue et sur le radar, en vol ou à quai',()=>{const canvas={clientWidth:390,clientHeight:844,width:0,height:0,getContext:()=>ctx};const radar={getContext:()=>ctx};const w=createWorld();Object.assign(w.ship,{docked:false,x:0,y:0});for(const docked of [false,true]){w.teammate={systemId:w.systemId,x:120,y:-80,angle:1,hullId:'veine',docked,pseudo:'Vekamel',updatedAt:Date.now()};const before=calls.length;render(canvas,radar,w,.67,{});assert.ok(calls.length>before);}w.teammate={systemId:w.systemId,x:1e6,y:1e6,angle:0,hullId:'inconnue',docked:false,pseudo:'',updatedAt:Date.now()};render(canvas,radar,w,.67,{});});

@@ -1,0 +1,14 @@
+# Veine — proposition visuelle taille M
+
+Asset : `assets/veine-mining-m.png`.
+Outil : imagegen intégré. Référence : Sillon de `assets/oree-atlas.png`.
+Statut : direction graphique validée, intégrée au vol et aux brevets.
+
+La coque traduit le rôle actuel de Veine dans `ships.js` : mineur spécialisé,
+45 t de soute, extraction 4 contre 3 pour Sillon, moins agile. Deux bras
+extracteurs, soute centrale segmentée, circuits de refroidissement et trois
+propulseurs. La proposition ne change aucune statistique.
+
+## Consigne de génération
+
+Create ONE standalone production game sprite: VEINE, a MEDIUM SIZE industrial asteroid mining spaceship for Outer Reach Online. The attached atlas is STYLE AND DESIGN LINEAGE REFERENCE: use ONLY the TOP LEFT ship, SILLON (small mining ship), as the parent design; inherit its worn gunmetal gray armor, copper bronze braces and piping, dark teal cylindrical machinery, tiny cyan windows, richly textured fine pixel art. Match the exact art direction/detail density seen in the atlas, not a smooth painting. VEINE must have a genuinely DIFFERENT silhouette, NOT a scaled-up copy of Sillon. Medium industrial workhorse, roughly 1.4 times the parent's intended length and broader, not capital-ship scale. Strict ORTHOGRAPHIC TOP-DOWN view, nose pointing RIGHT, engines LEFT, no isometric tilt. Broad rectangular reinforced central ore hold with segmented hatches and visible loading rails; compact recessed forward bridge with teal windows; two visibly articulated mining tool booms on the upper and lower forward shoulders, extending ahead of the blunt central bow, creating an open fork silhouette. Each boom ends in a rugged mining laser extraction head with a small lens, NOT guns, cannons, missile launchers or combat turrets. Two paired teal process/coolant tanks along the rear shoulders, copper conduits connecting the extraction heads back toward the hold, clearly exposed heat exchanger fins aft of the tools, three squat heavy stern engine nozzles plus tiny maneuvering jets. More extraction power, 45 tonne ore storage and slower handling than the small ship should be communicated through mass, bracing, tooling and cooling. Subtle structural asymmetry in service machinery, but balanced main frame. Intricate panel seams, bolts, access panels, vents, chips, restrained wear, dark recesses and stepped light, lit from upper left. Fine crisp pixel clusters, no blurred edges, readable strong silhouette when reduced. ONE ship only, centered, fully visible, square 1024x1024 canvas with generous black clearance around every tool, nozzle and antenna; ship occupies about 85 percent width and 60 percent height. SOLID PURE BLACK RGB 0,0,0 background and empty gaps; actual ship material shadows above RGB12 for future transparency. No text or name painted on the image, no labels, logo, watermark, stars, asteroids, station, planet, UI, frames, flames, exhaust trails or active laser beams.

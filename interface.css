@@ -1,0 +1,246 @@
+@font-face{font-family:"Outer Mono";src:url("./assets/ui/outer-mono.woff") format("woff");font-style:normal;font-weight:400;font-display:swap}
+html:has(body.outer-interface){-webkit-text-size-adjust:100%;text-size-adjust:100%}
+/* Interface Outer Reachs : surface de vol libre, commandes partagées PC/mobile. */
+:root{--or-panel:linear-gradient(135deg,#0b1d2cf5,#030e18f2);--or-line:#37586d;--or-cyan:#83dfed;--or-gold:#ebcd91;--or-bottom:max(12px,env(safe-area-inset-bottom));--or-top:max(16px,env(safe-area-inset-top))}
+html body.outer-interface{--hud-panel:#081824f5;--hud-line:#37586d;--hud-text:#e1edf5;--hud-muted:#a5bacd;--hud-gold:#ebcd91;--or-font:"Outer Mono",monospace;--pixel-font:var(--or-font);color:#e1edf5}
+html body.outer-interface button{border:1px solid var(--or-line);border-image:none;border-radius:3px;background:linear-gradient(135deg,#102839,#06131f);box-shadow:inset 0 0 0 2px #03101c,inset 0 0 0 3px #1a3545;color:#cce5f0;min-height:44px;transition:background-color .12s,border-color .12s}
+html body.outer-interface button:hover{border-color:var(--or-cyan);background:#13384b}
+html body.outer-interface button:focus-visible,html body.outer-interface summary:focus-visible{outline:2px solid var(--or-cyan);outline-offset:3px}
+html body.outer-interface button:is(.primary,[aria-selected='true'],[aria-expanded='true']){background:linear-gradient(135deg,#144157,#08232f);border-color:#65cbdf;color:#b4f0fa}
+html body.outer-interface button[data-icon]::before{filter:grayscale(1) brightness(1.5);opacity:.95}
+html body.outer-interface :is(dialog,.context-menu,.hud-location,.hud-objective,.chat-panel){border:1px solid var(--or-line);border-image:none;border-radius:7px;background:var(--or-panel);box-shadow:inset 0 0 0 3px #020c15,inset 0 0 0 4px #233c4b,0 12px 40px #0008;color:var(--hud-text)}
+html body.outer-interface dialog{padding:18px;max-height:calc(100dvh - 32px);scrollbar-width:thin;scrollbar-color:#37586d #07131d}
+html body.outer-interface dialog::backdrop{background:#010712a6;backdrop-filter:blur(3px)}
+html body.outer-interface :is(.dialoghead,.drawer-head){padding:0 0 12px!important;margin-bottom:14px!important;border-bottom:1px solid #36546a;color:#e3f2ff;letter-spacing:1px}
+html body.outer-interface :is(.dialoghead,.drawer-head) small{color:var(--or-cyan)}
+html body.outer-interface :is(.dialoghead,.drawer-head) button{flex:0 0 44px;background:#091c28}
+html body.outer-interface :is(input,textarea,select){background:#04101c;color:#dfedf5;border:1px solid var(--or-line);border-radius:3px}
+html body.outer-interface>header,html body.outer-interface>header:has(#hud-account:not([hidden])){top:var(--or-top);left:max(16px,env(safe-area-inset-left));width:250px;max-width:250px;min-width:0;height:84px;padding:0;border:0;border-image:none;overflow:visible;background:none;box-shadow:none;pointer-events:auto}
+html body.outer-interface .pilot-profile{width:100%;height:100%;padding:10px;text-align:left;border-color:#456478;background:var(--or-panel);border-radius:6px 14px 6px 6px}
+html body.outer-interface #hud-account{grid-template-columns:44px minmax(0,1fr);gap:10px}
+html body.outer-interface .pilot-identity{min-width:0;display:grid;gap:3px;font:11px/1.4 var(--or-font)}
+html body.outer-interface .pilot-identity>strong{font-size:13px;letter-spacing:.3px;color:#eff7fc}
+html body.outer-interface .pilot-identity>strong,html body.outer-interface #pilot-ship{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+html body.outer-interface #pilot-ship{color:#adbed2;font-size:11px}
+.pilot-progress{display:flex;gap:8px;align-items:center;white-space:nowrap}
+.pilot-progress progress{width:88px;height:8px;border:1px solid #506373;appearance:none;background:#06111c}
+.pilot-progress progress::-webkit-progress-bar{background:#06111c}
+.pilot-progress progress::-webkit-progress-value{background:repeating-linear-gradient(90deg,#71c889 0 14px,#2a6b51 14px 15px)}
+.pilot-progress progress::-moz-progress-bar{background:#71c889}
+html body.outer-interface .hud-location{position:fixed;z-index:20;top:var(--or-top);right:max(16px,env(safe-area-inset-right));width:226px;min-height:70px;padding:12px 16px}
+html body.outer-interface .location strong{font:13px/1.5 var(--or-font);letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html body.outer-interface .location span{display:block;font:11px/1.5 var(--or-font);color:var(--or-gold);overflow-wrap:anywhere}
+html body.outer-interface .hud-objective{position:fixed;z-index:20;top:calc(var(--or-top) + 84px);right:max(16px,env(safe-area-inset-right));left:auto;width:226px;max-width:none;padding:14px 16px}
+html body.outer-interface .hud-objective small{display:block;margin-bottom:8px;font:11px/1.4 var(--or-font);letter-spacing:1px;color:var(--or-cyan)}
+html body.outer-interface .hud-objective strong{display:block;font:11px/1.65 var(--or-font);font-weight:400;color:#c6d5e5}
+html body.outer-interface .mobile-toolbar{bottom:var(--or-bottom);left:0;right:0;max-width:490px;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:0;margin:auto}
+html body.outer-interface .mobile-toolbar button,html body.outer-interface .mobile-toolbar button[data-icon]{min-width:0;width:auto;min-height:70px;padding:7px 2px;display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;font:11px/1.3 var(--or-font)!important;white-space:nowrap;color:var(--or-cyan);text-transform:uppercase;letter-spacing:.2px}
+html body.outer-interface #open-cockpit-menu::before{content:'☰';background:none;width:24px;height:24px;font:25px/24px var(--or-font);color:var(--or-cyan)}
+html body.outer-interface #quickaction{position:fixed;z-index:25;right:max(26px,env(safe-area-inset-right));bottom:calc(var(--or-bottom) + 180px);width:96px;height:96px;padding:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:2px solid var(--or-gold);border-radius:50%;background:radial-gradient(circle,#102c37,#05111bec);color:#fff0d0;font:11px/1.4 var(--or-font);box-shadow:0 0 15px #ebcd9126,inset 0 0 0 4px #06121c}
+html body.outer-interface #quickaction::before{margin:0;width:32px;height:32px;background-size:32px;filter:grayscale(1) brightness(1.7)}
+html body.outer-interface>.corner-radar{top:auto;right:16px;bottom:var(--or-bottom);width:162px;height:162px;border:1px solid #52778b;border-radius:50%;background:radial-gradient(circle,#071824b0,#010a16dc);box-shadow:inset 0 0 0 5px #06111b,inset 0 0 0 6px #36546a;overflow:hidden;transform:none}
+html body.outer-interface .corner-radar .sectiontitle{height:26px;line-height:26px;font:10px/26px var(--or-font);color:#94d5e9;padding-top:5px}
+html body.outer-interface .corner-radar .radar-key{display:none}
+html body.outer-interface .corner-radar #radar{width:280px!important;height:160px!important;margin:-22px 0 0 -60px!important}
+html body.outer-interface .flight-readout{bottom:calc(var(--or-bottom) + 86px);left:50%;right:auto;transform:translateX(-50%);width:490px;max-width:490px;padding:7px 12px;border:1px solid #29485a;border-radius:4px;background:#04101dda;display:flex;align-items:center;gap:10px;font:10px/1.4 var(--or-font)}
+html body.outer-interface .flight-readout>span{font-size:10px!important}
+html body.outer-interface .mini-bars{gap:10px;flex:1;justify-content:center}
+html body.outer-interface .mini-bar{display:grid;grid-template-columns:auto 40px;gap:3px}
+html body.outer-interface .gauge-label{font:9px/1 var(--or-font);color:#a9d6df}
+html body.outer-interface .mini-icon{display:none}
+html body.outer-interface .mini-bar .track{margin:0;width:40px;height:6px}
+html body.outer-interface #flightcargo::before{display:none}
+html body.outer-interface .hud-drawer{bottom:calc(var(--or-bottom) + 82px);width:min(460px,calc(100vw - 24px));max-height:calc(100dvh - 120px);overflow:auto}
+html body.outer-interface .cockpit-menu{width:min(560px,calc(100vw - 24px))}
+html body.outer-interface #left-menu{position:static!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;width:100%!important;gap:10px;margin:8px 0 16px;max-height:none;overflow:visible}
+html body.outer-interface #left-menu button,html body.outer-interface #left-menu #open-ship-tree{width:100%!important;min-width:0!important;min-height:78px!important;padding:8px!important;font:11px/1.4 var(--or-font)!important;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px}
+html body.outer-interface .hud-shortcuts{position:fixed;top:calc(var(--or-top) + 98px);left:16px;z-index:22;display:grid;gap:8px}
+html body.outer-interface .hud-shortcut{width:50px;min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3px;font:9px/1.3 var(--or-font)}
+html body.outer-interface .hud-shortcut svg{width:22px;height:22px}
+html body.outer-interface .chat-toggle{left:16px;right:auto;top:auto;bottom:var(--or-bottom)}
+html body.outer-interface .chat-panel{left:16px;right:auto;top:auto;bottom:var(--or-bottom);width:300px;max-height:min(340px,calc(100dvh - 270px));padding:10px}
+html body.outer-interface .chat-tab{min-height:36px;color:var(--or-cyan)}
+html body.outer-interface .touch{bottom:calc(var(--or-bottom) + 130px);height:104px;left:20px;right:20px}
+html body.outer-interface #joystick{width:104px;height:104px;border:2px solid #51788f;border-radius:50%;clip-path:none;box-shadow:inset 0 0 0 7px #081a29,inset 0 0 0 8px #35596f;background:#10283bb8}
+html body.outer-interface #joystick .stick-knob{border-radius:50%;background:#345d77;border:2px solid #7598b2;box-shadow:0 0 0 4px #05121a;}
+html body.outer-interface .touch [data-key='thrust'],html body.outer-interface .touch [data-key='brake']{right:118px;width:76px;height:44px;min-height:44px;border-width:1px;box-shadow:inset 0 0 0 2px #06111c}
+html body.outer-interface #mining-feedback{bottom:calc(var(--or-bottom) + 134px);max-width:360px}
+html body.outer-interface #centerstatus{bottom:calc(var(--or-bottom) + 145px);pointer-events:none}
+html body.outer-interface #stationpanel{width:min(740px,calc(100vw - 32px))}
+html body.outer-interface .station-tabs{display:flex;gap:8px}
+html body.outer-interface .station-tabs button{flex:1;min-height:46px!important}
+html body.outer-interface .stationbottom{display:flex;justify-content:flex-end;border-top:1px solid #37586d;padding-top:12px!important}
+html body.outer-interface #launch{min-width:180px;border-color:var(--or-gold);color:#ffe4a9;background:linear-gradient(135deg,#302c1c,#141b1b)}
+html body.outer-interface :is(.module,.ship-family,.hull-card,.system-contact){border-color:#29495e;background-color:#081b28}
+html body.outer-interface .management-window .kv-list{gap:10px;grid-template-columns:repeat(auto-fit,minmax(135px,1fr))}
+html body.outer-interface .management-window .kv-list>div{min-height:70px;padding:12px;align-items:center;background:#071826;border:1px solid #36546a;border-radius:4px}
+@media(min-width:1101px) and (pointer:fine){html body.outer-interface .touch{display:none}}
+@media(max-width:1100px){
+ html body.outer-interface .chat-panel{width:270px;bottom:calc(var(--or-bottom) + 128px);max-height:calc(100dvh - 330px)}
+ html body.outer-interface .chat-toggle{bottom:calc(var(--or-bottom) + 250px)}
+ html body.outer-interface .mobile-toolbar{max-width:440px}
+ html body.outer-interface .flight-readout{width:440px;max-width:440px}
+ html body.outer-interface .gauge-label{display:none}
+ html body.outer-interface .mini-icon{display:block;width:12px;height:12px}
+ html body.outer-interface .mini-bar{display:flex}
+ html body.outer-interface>.corner-radar{width:110px;height:110px}
+ html body.outer-interface .corner-radar #radar{width:210px!important;height:120px!important;margin:-20px 0 0 -50px!important}
+ html body.outer-interface #quickaction{bottom:calc(var(--or-bottom) + 130px)}
+}
+@media(max-width:700px){
+ html body.outer-interface>header,html body.outer-interface>header:has(#hud-account:not([hidden])){top:max(10px,env(safe-area-inset-top));left:8px;width:calc(55% - 10px);max-width:none;height:78px}
+ html body.outer-interface .pilot-profile{padding:6px}
+ html body.outer-interface #hud-account{gap:6px}
+ html body.outer-interface .pilot-identity>strong{font-size:11px}
+ html body.outer-interface .pilot-identity,html body.outer-interface #pilot-ship{font-size:10px}
+ html body.outer-interface .pilot-progress{gap:4px;flex-wrap:wrap}
+ html body.outer-interface .pilot-progress progress{width:48px}
+ html body.outer-interface .hud-location{top:max(10px,env(safe-area-inset-top));right:8px;width:calc(45% - 10px);min-height:78px;padding:10px}
+ html body.outer-interface .location strong{font-size:11px}
+ html body.outer-interface .location span{font-size:10px;line-height:1.45}
+ html body.outer-interface .hud-objective{top:calc(max(10px,env(safe-area-inset-top)) + 88px);right:8px;width:170px;padding:10px 12px}
+ html body.outer-interface .hud-objective small{font-size:9px!important;letter-spacing:0;margin-bottom:5px;white-space:nowrap}
+ html body.outer-interface .hud-objective strong{font-family:var(--or-font)!important;font-size:11px;line-height:1.4;overflow-wrap:break-word;text-wrap:pretty}
+ html body.outer-interface .mobile-toolbar{left:8px;right:8px;max-width:none;gap:4px}
+ html body.outer-interface .mobile-toolbar button,html body.outer-interface .mobile-toolbar button[data-icon]{min-height:62px;font-family:var(--or-font)!important;font-size:9px!important;letter-spacing:0;padding:4px 1px;gap:4px}
+ html body.outer-interface .flight-readout{bottom:calc(var(--or-bottom) + 70px);left:8px;right:8px;transform:none;max-width:none;width:auto;padding:6px;gap:6px}
+ html body.outer-interface .mini-bars{gap:5px}
+ html body.outer-interface .mini-bar .track{width:25px}
+ html body.outer-interface>.corner-radar{display:none}
+ html body.outer-interface #quickaction{right:12px;bottom:calc(var(--or-bottom) + 108px);width:88px;height:88px;font-family:var(--or-font)!important;font-size:10px!important;line-height:1.2;white-space:nowrap}
+ html body.outer-interface .touch{left:12px;right:12px;bottom:calc(var(--or-bottom) + 110px);height:94px}
+ html body.outer-interface #joystick{width:94px;height:94px}
+ html body.outer-interface .touch [data-key='thrust'],html body.outer-interface .touch [data-key='brake']{right:98px;width:62px;font-size:10px!important}
+ html body.outer-interface .hud-shortcuts{display:none}
+ html body.outer-interface .chat-toggle{left:8px;top:calc(max(10px,env(safe-area-inset-top)) + 88px);bottom:auto}
+ html body.outer-interface .chat-panel{left:8px;right:8px;top:calc(max(10px,env(safe-area-inset-top)) + 88px);bottom:auto;width:auto;max-width:none;max-height:calc(100dvh - 320px);z-index:30}
+ html body.outer-interface dialog:is(#stationpanel,#helppanel,#profiledialog,#ship-tree-dialog,.management-window)[open]{width:calc(100vw - 16px)!important;max-width:calc(100vw - 16px)!important;max-height:calc(100dvh - 24px)!important;border:1px solid var(--or-line)!important;border-image:none!important;padding:12px!important}
+ html body.outer-interface :is(dialog,.hud-drawer) .dialoghead{background:#081824!important;padding-top:4px!important}
+ html body.outer-interface #mining-feedback{bottom:calc(var(--or-bottom) + 220px);left:8px;right:8px;width:auto;max-width:none}
+ html body.outer-interface #centerstatus{bottom:calc(var(--or-bottom) + 212px);font-size:10px}
+ html body.outer-interface #left-menu{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-height:500px) and (orientation:landscape){
+ html body.outer-interface .hud-objective{display:none}
+ html body.outer-interface .hud-shortcuts{display:none}
+ html body.outer-interface .mobile-toolbar{max-width:400px}
+ html body.outer-interface .mobile-toolbar button,html body.outer-interface .mobile-toolbar button[data-icon]{min-height:48px;font-size:9px!important;gap:3px}
+ html body.outer-interface .flight-readout{bottom:calc(var(--or-bottom) + 54px);width:350px;left:50%;right:auto;transform:translateX(-50%)}
+ html body.outer-interface .touch{bottom:calc(var(--or-bottom) + 58px);height:88px}
+ html body.outer-interface #joystick{width:88px;height:88px;font-family:var(--or-font)!important;font-size:10px!important;line-height:1.2;white-space:nowrap}
+ html body.outer-interface .touch [data-key='thrust'],html body.outer-interface .touch [data-key='brake']{right:98px;width:62px;height:44px}
+ html body.outer-interface #quickaction{bottom:calc(var(--or-bottom) + 58px);right:12px;width:84px;height:84px}
+ html body.outer-interface>.corner-radar{display:none}
+ html body.outer-interface .chat-toggle{top:108px;bottom:auto}
+ html body.outer-interface .chat-panel{top:12px;bottom:12px;max-height:none;width:300px;z-index:30}
+ html body.outer-interface #mining-feedback{bottom:calc(var(--or-bottom) + 100px);left:120px;right:190px;max-width:340px}
+}
+@media(prefers-reduced-motion:reduce){html body.outer-interface button{transition:none}}
+
+/* Même famille et même échelle sur PC/mobile, y compris les libellés imbriqués.
+   La priorité explicite neutralise les anciennes règles pixel en !important. */
+html body.outer-interface :is(button,input,textarea,select,small,strong,b,span,em,p,label,summary,h1,h2,h3,dt,dd,li,.sectiontitle){font-family:var(--or-font)!important}
+html body.outer-interface{--ui-text:13px;--ui-small:11px;--ui-meta:10px;--ui-button:11px}
+html body.outer-interface :is(.mobile-toolbar button,.mobile-toolbar button[data-icon],.mobile-toolbar button span,.touch button,.chat-toggle,.chat-toggle span,.hud-shortcut,.hud-shortcut span){font-size:10px!important;line-height:1.3!important}
+html body.outer-interface #quickaction{font-size:11px!important;line-height:1.3!important}
+html body.outer-interface :is(.pilot-identity>strong,.location strong){font-size:13px!important;line-height:1.4!important}
+html body.outer-interface :is(.pilot-identity,#pilot-ship,.pilot-progress span,.location span,.hud-objective strong){font-size:11px!important;line-height:1.4!important}
+html body.outer-interface .hud-objective small{font-size:11px!important;line-height:1.4!important;letter-spacing:0}
+html body.outer-interface :is(.dialoghead,.drawer-head) :is(h2,h3){font-size:15px!important;line-height:1.4!important}
+html body.outer-interface #left-menu button span{font-size:11px!important;line-height:1.4!important}
+
+/* Cadres harmonisés : priorité sur les anciennes bordures des boutons à icône. */
+html body.outer-interface .mobile-toolbar button[data-icon]{border:1px solid var(--or-line);border-image:none;border-radius:7px;background:var(--or-panel);box-shadow:inset 0 0 0 3px #020c15,inset 0 0 0 4px #233c4b}
+html body.outer-interface .mobile-toolbar button[data-icon]:is(:hover,[aria-expanded='true']){border-color:var(--or-cyan);border-image:none;background:linear-gradient(135deg,#123044,#061621)}
+html body.outer-interface :is(.mobile-toolbar button[data-icon],.mobile-toolbar button[data-icon] span){font-size:9px!important;font-weight:400!important;line-height:1.4!important;letter-spacing:0}
+html body.outer-interface{font-family:var(--or-font);font-synthesis:none}
+
+/* Icônes graphiques du menu principal, sans modifier la surface de vol. */
+html body.outer-interface .mobile-toolbar .asset-toolbar-icon::before{content:''!important;display:block!important;width:26px!important;height:26px!important;flex:0 0 26px;background-image:var(--toolbar-icon)!important;background-position:center!important;background-repeat:no-repeat!important;background-size:contain!important;image-rendering:pixelated;filter:none!important;opacity:1!important}
+html body.outer-interface #open-cockpit-menu.asset-toolbar-icon::before{font-size:0!important;color:transparent!important}
+@media(max-width:700px){html body.outer-interface .mobile-toolbar .asset-toolbar-icon::before{width:24px!important;height:24px!important;flex-basis:24px}}
+
+/* Sous-menu Options : réglages de bord regroupés dans le menu principal. */
+html body.outer-interface .cockpit-options{margin:10px 0;border:1px solid var(--or-line);background:#06131f}
+html body.outer-interface .cockpit-options>summary{cursor:pointer;padding:11px 13px;color:var(--or-cyan);font:10px/1.4 var(--or-font);text-transform:uppercase;letter-spacing:.7px;list-style:none}
+html body.outer-interface .cockpit-options>summary::-webkit-details-marker{display:none}
+html body.outer-interface .cockpit-options>summary::after{content:'+';float:right}
+html body.outer-interface .cockpit-options[open]>summary::after{content:'−'}
+html body.outer-interface .cockpit-options-panel{padding:0 12px 12px;border-top:1px solid var(--or-line)}
+html body.outer-interface .cockpit-options-panel>small{display:block;margin:11px 0 6px;color:#7892a5;font:9px/1.3 var(--or-font);letter-spacing:.8px}
+html body.outer-interface .cockpit-options-row{display:flex;align-items:center;gap:8px}
+html body.outer-interface .cockpit-options-row>span{margin-right:auto;color:#c6d5e5;font:10px/1.4 var(--or-font)}
+html body.outer-interface .cockpit-options-row button{min-height:36px;padding:7px 10px}
+html body.outer-interface .sound-options button{width:100%}
+
+/* Harmonisation du sous-menu Options avec la DA des boutons du cockpit. */
+html body.outer-interface .cockpit-options{border:0;background:transparent}
+html body.outer-interface .cockpit-options>summary,html body.outer-interface .cockpit-options-row button{border:1px solid var(--or-line)!important;border-radius:3px!important;background:linear-gradient(135deg,#102839,#06131f)!important;box-shadow:inset 0 0 0 2px #03101c,inset 0 0 0 3px #1a3545!important;color:var(--or-cyan)!important;font-family:var(--or-font)!important;text-transform:uppercase}
+html body.outer-interface .cockpit-options>summary{padding:10px 12px}
+html body.outer-interface .cockpit-options[open]>summary{border-color:var(--or-cyan)!important}
+html body.outer-interface .cockpit-options-panel{margin-top:7px;padding:10px;border:1px solid var(--or-line);background:#06131f}
+html body.outer-interface .cockpit-options-row button:is(:hover,:focus-visible){border-color:var(--or-cyan)!important;background:linear-gradient(135deg,#123044,#061621)!important}
+
+/* Options est une tuile du menu, identique à Profil / Craft / Arbre. */
+html body.outer-interface #left-menu #open-options{width:100%!important;min-width:0!important;min-height:78px!important;padding:8px!important;font:11px/1.4 var(--or-font)!important;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px}
+html body.outer-interface #left-menu #open-options::before{content:'';width:24px;height:24px;background:url('./assets/icons/fonctions/parametres.png') center/contain no-repeat;image-rendering:pixelated}
+
+/* Inventaire stackable : une tuile par ressource, quantité sur l'icône. */
+html body.outer-interface #inventory-window .window-stock{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:10px;margin:10px 0 14px}
+html body.outer-interface .inventory-stack{min-width:0;padding:8px 6px;border:1px solid var(--or-line);border-radius:3px;background:#071826;display:flex;flex-direction:column;align-items:center;gap:7px}
+html body.outer-interface .inventory-stack-icon{position:relative;display:flex;width:64px;height:64px;align-items:center;justify-content:center;background-position:center;background-repeat:no-repeat;background-size:contain;image-rendering:pixelated;color:var(--or-cyan);font:700 22px/1 var(--or-font)}
+html body.outer-interface .inventory-stack-fallback{border:1px solid #36546a;background:#0a1e2d}
+html body.outer-interface .inventory-stack-qty{position:absolute;right:2px;bottom:2px;padding:2px 4px;border:1px solid #36546a;border-radius:2px;background:#03101ddd;color:#e6c88f;font:700 9px/1.2 var(--or-font);white-space:nowrap}
+html body.outer-interface .inventory-stack-name{width:100%;min-height:28px;text-align:center;color:#c6d5e5;font:9px/1.35 var(--or-font);overflow-wrap:anywhere}
+html body.outer-interface .inventory-empty{grid-column:1/-1;margin:0;padding:16px;text-align:center;color:#7892a5}
+@media(max-width:700px){html body.outer-interface #inventory-window .window-stock{grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:7px}html body.outer-interface .inventory-stack{padding:6px 4px}html body.outer-interface .inventory-stack-icon{width:54px;height:54px}html body.outer-interface .inventory-stack-name{font-size:8px}}
+
+/* La soute partage exactement le rendu stackable de l'inventaire station. */
+html body.outer-interface #cargo-window .window-stock{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:10px;margin:10px 0 14px}
+@media(max-width:700px){html body.outer-interface #cargo-window .window-stock{grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:7px}}
+
+/* Tuiles de ressources : même DA que les panneaux et commandes du cockpit. */
+html body.outer-interface .inventory-stack{
+ position:relative;
+ border:1px solid var(--or-line)!important;
+ border-radius:3px!important;
+ background:linear-gradient(135deg,#102839,#06131f)!important;
+ box-shadow:inset 0 0 0 2px #03101c,inset 0 0 0 3px #1a3545!important;
+ padding:10px 8px 8px!important;
+}
+html body.outer-interface .inventory-stack::before{
+ content:'';
+ position:absolute;
+ inset:4px;
+ border:1px solid rgba(54,84,106,.45);
+ pointer-events:none;
+}
+html body.outer-interface .inventory-stack-icon{
+ z-index:1;
+ padding:3px;
+ border:1px solid #36546a;
+ border-radius:2px;
+ background-color:#04111d;
+ box-shadow:inset 0 0 0 2px #071826;
+}
+html body.outer-interface .inventory-stack-name{
+ z-index:1;
+ padding-top:2px;
+ color:#c6d5e5;
+ text-transform:uppercase;
+ letter-spacing:.35px;
+}
+html body.outer-interface .inventory-stack-qty{
+ right:1px;
+ bottom:1px;
+ border:1px solid var(--or-line);
+ border-radius:1px;
+ background:#03101df2;
+ color:#e6c88f;
+ box-shadow:none;
+}
+html body.outer-interface .inventory-stack:is(:hover,:focus-within){
+ border-color:var(--or-cyan)!important;
+}
+
+html body.outer-interface .inventory-stack-image{display:block;width:100%;height:100%;object-fit:contain;image-rendering:pixelated;pointer-events:none}

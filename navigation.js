@@ -1,0 +1,2 @@
+import {speed,shipStats} from './simulation.js';
+export function guidance(s,t){let dx=t.x-s.x,dy=t.y-s.y,d=Math.hypot(dx,dy),desired=Math.atan2(dy,dx),diff=Math.atan2(Math.sin(desired-s.angle),Math.cos(desired-s.angle)),safe=shipStats(s).acceleration*.8,stopping=speed(s)**2/(2*safe);return {arrived:d<150&&speed(s)<5,input:{left:diff<-.035,right:diff>.035,brake:d<stopping+130||Math.abs(diff)>.4,thrust:d>stopping+130&&Math.abs(diff)<.2}};}

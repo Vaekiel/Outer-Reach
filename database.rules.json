@@ -1,0 +1,25 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "squads": {
+      "$key": {
+        ".read": "auth != null && $key.matches(/^[A-Za-z0-9_-]{32,64}$/)",
+        "$uid": {
+          ".write": "auth != null && auth.uid === $uid && $key.matches(/^[A-Za-z0-9_-]{32,64}$/)",
+          ".validate": "newData.hasChildren(['s', 'x', 'y', 'a', 'vx', 'vy', 'h', 'd', 't'])",
+          "s": { ".validate": "newData.isString() && newData.val().matches(/^[a-z]{2,24}$/)" },
+          "x": { ".validate": "newData.isNumber() && newData.val() > -1000000 && newData.val() < 1000000" },
+          "y": { ".validate": "newData.isNumber() && newData.val() > -1000000 && newData.val() < 1000000" },
+          "a": { ".validate": "newData.isNumber() && newData.val() > -100 && newData.val() < 100" },
+          "vx": { ".validate": "newData.isNumber() && newData.val() > -2000 && newData.val() < 2000" },
+          "vy": { ".validate": "newData.isNumber() && newData.val() > -2000 && newData.val() < 2000" },
+          "h": { ".validate": "newData.isString() && newData.val().length <= 24" },
+          "d": { ".validate": "newData.isBoolean()" },
+          "t": { ".validate": "newData.val() === now" },
+          "$other": { ".validate": false }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+# Porte existante — quatre couleurs
+
+Proposition générée avec imagegen intégré à partir de la porte gauche de `assets/expedition-sites.png`. Référence de finition : `assets/industrial-stations.png`.
+
+Atlas : `assets/travel-gates-colors.png`. Cyan, ambre, violet, vert, dans l’ordre de lecture. Intégré aux portes intersystèmes : couleur stable par destination, taille 150, détourage et cache.
+
+## Consigne
+
+Create a revised game sprite atlas: FOUR COLOR VARIANTS OF THE EXISTING TRAVEL GATE shown in IMAGE 1, the LEFTMOST sprite only (x0..127 in original 384x128 atlas). Image1 is the mandatory SHAPE reference, image2 is material and detail STYLE reference only. Preserve the original gate design: thin segmented circular metallic ring with a large completely empty central opening, small radial spikes/antennae, narrow four cardinal protrusions, broken-looking segmented mechanical rim. Reproduce that same silhouette and proportions across ALL FOUR variants. Do NOT use the archive in middle or wreck at right of image1. Do NOT use bulky station shapes from image2. Upgrade only definition/material detail to the current Outer Reach Online art: fine crisp pixel art, worn gunmetal plating, rivets, small copper cables, industrial modules, top-left lighting, strict overhead orthographic 2D. Four identical gate architectures in a 2x2 grid with DIFFERENT accent colors: top left cyan/teal; top right amber/gold; bottom left violet/amethyst; bottom right green/jade. Keep steel gray structure and copper hardware consistent; accent color on inner rim emitters, small power cells and lamps. Restrained light, no bloom or magical vortex. Large pure black central hole, pure black background, generous empty margins between sprites, entire antennae visible. No text, no stars, no ships. Square 1536x1536 sheet. Same scale and alignment across all 4. Design anchored to the existing slender segmented ring, NOT the previously proposed heavy gates.
